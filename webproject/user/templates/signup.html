@@ -1,0 +1,44 @@
+{% extends "head.html" %}
+{% load static %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}?after">{% endblock %}
+
+{% block content %}
+    <section class="contents d-flex align-items-center">
+        <h2 class="title">회원가입</h2>
+        <div class="d-flex justify-content-center mb-5 step-indicator">
+            <span class="d-flex flex-column justify-content-center main-font-color">
+                <i class="fas fa-user icon"></i>
+                회원 선택
+            </span> 
+            <span>
+                <br>
+                <i class="fa-solid fa-arrow-right"></i>
+            </span>
+            <span class="d-flex flex-column justify-content-center">
+                <i class="fa-solid fa-pen icon"></i>
+                정보 입력
+            </span>
+            <span>
+                <br>
+                <i class="fa-solid fa-arrow-right"></i>
+            </span>
+            <span class="d-flex flex-column justify-content-center">
+                <i class="fa-solid fa-check icon"></i>
+                가입 완료
+            </span>
+        </div>
+        <div class="d-flex justify-content-between mt-5" >
+            <a class="circle person" href="{% url 'user:normalSignupForm' %}">
+                <i class="fas fa-user icon"></i>
+                일반회원
+            </a>
+            <a class="circle enterprise" href="{% url 'user:enterpriseSignupForm' %}">
+                <i class="fa-solid fa-building icon"></i>
+                기업회원
+            </a>
+        </div>
+    </section>
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/signup.js' %}"></script>
+{% endblock %}

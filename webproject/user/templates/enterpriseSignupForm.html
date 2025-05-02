@@ -1,0 +1,245 @@
+{% extends "head.html" %}
+{% load static %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{% static 'css/signupForm.css' %}">{% endblock %}
+{% block content %}
+    <section class="d-flex justify-content-center align-items-center flex-column">
+        <h2 class="title">기업회원 정보입력</h2>
+        <form method="post" id="signupForm" class="d-flex align-items-center flex-column">
+            <input type="hidden" value="기업회원" name="userType">
+            {% csrf_token %}
+            <table class="base-table">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <th>회사명</th>
+                        <td>
+                            {{form.name}}
+                            {% if form.name.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.name.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.email.label}}</th>
+                        <td>
+                            {{form.email}}
+                            {% if form.email.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.email.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.password.label}}</th>
+                        <td>
+                            {{form.password}}
+                            {% if form.password.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.password.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.varifyPassword.label}}</th>
+                        <td>
+                            {{form.varifyPassword}}
+                            {% if form.varifyPassword.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.varifyPassword.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.firstNumber.label}}</th>
+                        <td>
+                            <div class="row">       
+                                <div class="col-3">
+                                    {{form.firstNumber}}
+                                </div>
+                                <span class="hyphen">-</span>
+                                <div class="col-4">
+                                    {{form.middleNumber}}
+                                    {% if form.middleNumber.errors %}
+                                        <div class="text-danger error-msg">
+                                            {{ form.middleNumber.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <span class="hyphen">-</span>
+                                <div class="col-4">
+                                    {{form.lastNumber}}
+                                    {% if form.lastNumber.errors %}
+                                        <div class="text-danger error-msg">
+                                            {{ form.lastNumber.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.address.label}}</th>
+                        <td>
+                            <div class="w-75">
+                                <div class="d-flex mb-2">
+                                  {{form.postcode}}
+                                  <input type="button" class="btn btn-outline-dark" onclick="execDaumPostcode()" value="우편번호 찾기">
+                                </div>
+                                {{form.address}}
+                                <div class="d-flex mt-2">
+                                  {{form.detailAddress}}
+                                  {{form.extraAddress}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.exponent.label}}</th>
+                        <td>
+                            {{form.exponent}}
+                            {% if form.exponent.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.exponent.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.businessNumber.label}}</th>
+                        <td>
+                            {{form.businessNumber}}
+                            {% if form.businessNumber.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.businessNumber.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <button type="button" class="btn btn-outline-dark btn-lg w-25">취소</button>
+                            <button type="submit" class="btn main-color btn-lg w-25">등록</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            
+            <div class="terms-container">
+                <span><input type="checkbox" onclick="selectAll(this, 'terms')" id="checkAll"><label for="checkAll">전체 약관에 동의합니다</label></span>
+                <ul>
+                    <li class="d-flex justify-content-between">
+                        <div>
+                            <input type="checkbox" name="terms" id="terms"><label for="terms">(필수) 이용약관에 동의합니다</label>
+                        </div>
+                        <span type="button" onclick="showEl($('.terms'))" id="view-content">내용보기</span>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <div>
+                            <input type="checkbox" name="terms" id="privacy"><label for="privacy">(필수) 개인정보 취급방침에 동의합니다</label>
+                        </div>    
+                        <span type="button" onclick="showEl($('.privacy'))" id="view-content">내용보기</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div>
+                <div class="terms justify-content-center align-items-center">
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <h1 style="width: 500px;">인쇄회사 이용약관</h1>
+                            <span class="close-btn main-color ">
+                                <i class="fa-solid fa-x fa-fw" onclick="closeWindow($('.terms'))"></i>
+                            </span>
+                        </div>
+                        <hr>
+                        <h4>제 1 조 (총칙)</h4>
+                        본 약관은 smartprint (이하 "회사"라 합니다)가 제공하는 인쇄 서비스(이하 "서비스"라 합니다)의 이용에 관한 사항을 규정합니다. 본 약관은 회사의 웹사이트를 통해 공지하며, 고객은 서비스 이용 시 본 약관에 동의한 것으로 간주됩니다.
+                        <br>
+                        <h4>제 2 조 (서비스 제공)</h4>
+                        회사는 다양한 인쇄 서비스를 제공합니다. 고객은 웹사이트에서 제공하는 서비스의 종류를 확인하고, 이용 방법에 따라 서비스를 신청할 수 있습니다.
+                        <br>
+                        <h4>제 3 조 (이용자의 의무)</h4>
+                        고객은 서비스 신청 시 정확하고 진실된 정보를 제공해야 하며, 저작권 및 지적 재산권을 준수해야 합니다. 불법적이거나 부정확한 정보로 인해 발생하는 문제에 대해서는 회사가 책임지지 않습니다.
+                        <br>
+                        <h4>제 4 조 (계약의 체결)</h4>
+                        고객이 서비스 신청 후 회사가 이를 확인한 시점에 계약이 성립됩니다. 계약 성립 후 고객은 계약 내용을 신중히 확인해야 합니다.
+                        <br>
+                        <h4>제 5 조 (결제)</h4>
+                        고객은 회사가 지정한 결제 방법에 따라 요금을 결제해야 합니다. 주문 취소 및 환불에 관한 정책은 별도로 안내합니다.
+                        <br>
+                        <h4>제 6 조 (개인정보 보호)</h4>
+                        회사는 고객의 개인정보를 보호하며, 수집된 개인정보는 서비스 제공을 위한 목적에 한하여 사용됩니다. 고객의 개인정보는 제3자에게 제공되지 않으며, 이에 대한 동의가 필요합니다.
+                        <br>
+                        <h4>제 7 조 (서비스 중단 및 변경)</h4>
+                        회사는 시스템 점검, 유지보수 또는 기타 사유로 인해 서비스의 일시 중단 및 변경을 할 수 있습니다. 이 경우 고객에게 사전 통지합니다.
+                        <br>
+                        <h4>제 8 조 (책임 제한)</h4>
+                        회사는 서비스 이용으로 인해 발생한 손해에 대해 책임을 지지 않으며, 고객의 과실로 인한 손해는 고객이 부담합니다.
+                        <br>
+                        <h4>제 9 조 (분쟁 해결)</h4>
+                        본 약관과 관련하여 분쟁이 발생할 경우, 회사와 고객은 우선적으로 협의하여 해결합니다. 협의가 이루어지지 않을 경우, 관할 법원은 [관할 법원 명]으로 합니다.
+                        <br>
+                        <h4>제 10 조 (약관의 변경)</h4>
+                        회사는 본 약관을 변경할 수 있으며, 변경 사항은 웹사이트에 공지합니다. 고객은 변경된 약관에 대해 확인하고 동의할 의무가 있습니다.
+                    </div>
+                </div>
+                <div class="privacy justify-content-center align-items-center">
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <h1 style="width: 500px;">개인정보 취급방침</h1>
+                            <span class="close-btn main-color ">
+                                <i class="fa-solid fa-x fa-fw" onclick="closeWindow($('.privacy'))"></i>
+                            </span>
+                        </div>
+                        <hr>
+                        <h4>1. 개인정보의 수집 및 이용 목적</h4>
+                        당사는 고객의 개인정보를 다음과 같은 목적으로 수집 및 이용합니다.
+                        <br>
+                        서비스 제공 및 관리: 주문 처리, 결제 확인, 배송 등의 서비스 운영
+                        고객 상담 및 지원: 문의 및 요청에 대한 답변 제공
+                        마케팅 및 광고: 서비스 관련 정보 및 프로모션 안내
+                        <br>
+                        <h4>2. 수집하는 개인정보 항목</h4>
+                        당사는 다음과 같은 개인정보를 수집합니다.
+                        <br>
+                        필수항목: 이름, 연락처, 이메일, 배송지 주소
+                        선택항목: 생일, 관심사 등
+                        <br>
+                        <h4>3. 개인정보의 보유 및 이용 기간</h4>
+                        수집한 개인정보는 서비스 제공 목적이 달성될 때까지 보유하며, 이후에는 지체 없이 파기합니다. 단, 관련 법령에 따라 일정 기간 보관해야 하는 경우에는 해당 법령에 따릅니다.
+                        <br>
+                        <h4>4. 개인정보의 제3자 제공</h4>
+                        당사는 고객의 개인정보를 원칙적으로 외부에 제공하지 않으며, 다음과 같은 경우에만 제3자에게 제공할 수 있습니다.
+                        <br>
+                        고객의 동의를 받은 경우
+                        법령에 의거한 경우
+                        <br>
+                        <h4>5. 개인정보 보호를 위한 기술적 및 관리적 대책</h4>
+                        당사는 고객의 개인정보를 보호하기 위해 다음과 같은 노력을 기울입니다.
+                        <br>
+                        데이터 암호화 및 접근 제한
+                        정기적인 보안 점검 및 시스템 개선
+                        <br>
+                        <h4>6. 개인정보 관련 고객의 권리</h4>
+                        고객은 언제든지 자신의 개인정보 열람, 정정, 삭제를 요청할 수 있으며, 당사는 즉시 조치하겠습니다.
+                        <br>
+                        <h4>7. 개인정보 취급방침의 변경</h4>
+                        본 개인정보 취급방침은 법률 또는 회사 정책에 따라 변경될 수 있으며, 변경 시 웹사이트에 공지하겠습니다.
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+    <!-- https://inpa.tistory.com/entry/JS-%F0%9F%93%9A-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8-%EC%9E%AC%ED%99%95%EC%9D%B8Confirm-password-%ED%8F%BC-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0 -->
+{%endblock%}
+{% block script %}
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="{% static 'js/signupForm.js' %}"></script>
+{% endblock %}

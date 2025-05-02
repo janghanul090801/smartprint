@@ -1,0 +1,150 @@
+@charset "utf-8";
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+li{
+    list-style-type: none;
+}
+
+.banner {    
+    background-size: 100% 580px; 
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 580px; 
+}
+
+.notice-faq{
+    border: 2px solid #ccc;
+    margin: auto;
+    width: 800px;
+    height: 200px;
+}
+
+.board-title{
+    font-weight: bold;
+}
+
+.board {
+    width: 350px;
+    border: 1px solid #aaa;
+    height: 200px;
+    padding: 3px;
+    margin: -1 -1 0 -1;
+}
+
+.board-a {
+    color: #333;
+}
+
+.board-a:hover {
+    color: #333;
+}
+
+.board li:nth-child(2n -1) {  
+    background-color:#eee;
+}
+.board li span{
+    float: right;  
+}
+.board li:hover{
+    font-weight: bold;
+}
+.board ul{
+    width: 100%;
+    margin: 0px;
+    padding: 8px 0px;
+}
+
+.board ul li{
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+    margin: 0px 10px;
+}
+
+.post-title{
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 콘텐츠 탭메뉴 */
+
+.contents{
+    width: 80%;
+    height: 220px;
+    margin: 10px auto;
+}
+
+.contents #showGoods{
+    min-width: 1652px;
+}
+
+.tab-menu{
+    float: left;
+    width: 100%;
+    height: 200px;
+    margin: 0px;
+}
+
+.tab-menu a{
+    text-decoration: none;
+}
+
+.goods-container {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.tab-menu>li{
+    width: 16.6666%;
+    float: left;
+    height: 20px;
+    line-height: 40px;
+}
+
+.tab-menu>li>a{
+    display: block;
+    font-size: 16px;
+    text-align: center;
+    background-color: #ddd;
+    border: 1px solid #eee;
+    border-bottom: none;
+}
+
+.tab-menu>li>a:hover{
+    background-color: #eee;
+    font-weight: 800;
+}
+
+.tab-menu>li.active>a{
+    background-color: #fa2d2d;
+    color: white;
+    transition: background-color 0.4s ease;
+}
+
+.tab-menu>li>div{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,0%);
+    height: 0px;
+    overflow: hidden;
+}
+
+.tab-menu>li.active>div{
+    width: 80%;
+    height: auto;
+    margin: 0px auto;
+    border: 1px solid #ddd;
+}
+
+.hover:hover {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
+

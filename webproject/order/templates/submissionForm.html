@@ -1,0 +1,22 @@
+{% extends 'head.html' %}
+{% load static %}
+{%block css%}<link rel="stylesheet" type="text/css" href="{%static 'css/submissionForm.css' %}">{%endblock%}
+
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center flex-column" style="max-width: 1000px; margin-top: 50px;">
+      <div class="contants-wrap">
+        <img src="{{ goodsInfo.img.url }}" class="image">
+        {% include formName %}
+      </div> 
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+      var formName = "{{formName}}";
+      var unitQuantity = 100;
+      if (formName == "./submissions/book.html" || formName == './submissions/other.html') {
+        unitQuantity = 1;
+      }
+    </script>
+    <script src="{% static 'js/submissionForm.js' %}"></script>
+{%endblock%}

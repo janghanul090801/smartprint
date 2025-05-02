@@ -1,0 +1,102 @@
+{% load static %}
+<header style="min-width:1090px; position: sticky; top: 0; z-index: 1000;">
+    <div class="px-3 py-2 text-bg-dark border-bottom" style="background-color: white;min-width:1090px;">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-decoration-none" style="color: red; font-weight: bold; font-size: 2em;">
+            SMART PRINT
+          </a>
+
+          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+            <li>
+              {% if user.is_authenticated %}
+              <div class="nav-link text-secondary">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
+                <span style="color: gray;">안녕하세요, {{ user.name }}님!</span>
+              </div>
+              {% else %}
+              <a href="{% url 'user:login' %}" class="nav-link text-secondary">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
+                <span class="hover" style="color: gray;">로그인</span>
+              </a>
+              {% endif %}
+            </li>
+            <li>
+              {% if user.is_authenticated %}
+              <a href="" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();" class="nav-link text-secondary">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
+                <span class="hover" style="color: gray;">로그아웃</span>
+              </a>
+              <form action="{% url 'user:logout' %}" method="post" id="logoutForm">
+                {% csrf_token %}
+              </form>
+              {% else %}
+              <a href="{% url 'user:signup' %}" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
+                <span class="hover" style="color: gray;">회원가입</span>
+              </a>
+              {% endif %}
+            </li>
+            <li>
+              <a href="{% url 'order:orderCart' %}" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#table"/></svg>
+                <span class="hover" style="color: gray;">장바구니</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'order:orderDetails' %}" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
+                <span class="hover" style="color: gray;">주문내역</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'user:myPage' %}" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
+                <span class="hover" style="color: gray;">마이페이지</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="container">
+        <i class="fa-solid fa-bars fa-3x" id="showDropdown" ></i>
+      </div>
+    </div>
+    <div class="dropdown-container justify-content-center">
+      <div class="dropdown-content">
+        <ul class="dropdownMenu">
+          <li class="active"><a class="dropdown-menu-a" href="{% url 'order:showProduct' 'namecard' %}">명함</a>
+            <div>
+              <ul id="namecard"></ul>
+            </div>
+          </li>
+          <li><a class="dropdown-menu-a" href="{% url 'order:showProduct' 'promotion' %}">홍보물</a>
+            <div>              
+              <ul id="promotion"></ul>
+            </div>
+          </li>
+          <li><a class="dropdown-menu-a" href="{% url 'order:showProduct' 'sticker' %}">스티커</a>
+            <div>              
+              <ul id="sticker"></ul>
+            </div>
+          </li>
+          <li><a class="dropdown-menu-a" href="{% url 'order:showProduct' 'book' %}">책자</a>
+            <div>              
+              <ul id="book"></ul>
+            </div>
+          </li>
+          <li><a class="dropdown-menu-a" href="{% url 'order:showProduct' 'envelope' %}">봉투</a>
+            <div>              
+              <ul id="envelope"></ul>
+            </div>
+          </li>
+          <li><a class="dropdown-menu-a" href="{% url 'order:showProduct' 'other' %}">기타</a>
+            <div>              
+              <ul id="other"></ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>  
+  </header>
+  

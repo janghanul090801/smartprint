@@ -1,0 +1,64 @@
+{% extends 'head.html' %}
+{% load static %}
+{%block css%}<link rel="stylesheet" type="text/css" href="{%static 'css/orderCart.css' %}?after">{%endblock%}
+
+{% block content %}
+<section class="container d-flex justify-content-center align-items-center flex-column">
+    <h2 class="title">주문내역</h2>
+    <div class="wrap">
+        <form method="post" action="{% url 'order:orderDetails' %}" id="orderCartForm">
+            {% csrf_token %}
+            <input type="hidden" name="goods" id="goodsList">
+            <table class="wrapTable">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <table class="orderTable">
+                                <thead>
+                                    <tr class="table-tr-height">
+                                        <th style="width: 100px;">주문번호</th>
+                                        <th>주문품목</th>
+                                        <th>배송방법</th>
+                                        <th>현재상태</th>
+                                        <th>금액</th>
+                                        <th style="width: 100px;">주문취소</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="showGoods"></tbody>
+                                <tfoot>
+                                    <tr class="table-tr-height">
+                                        <th colspan="7" style="text-align: right;" id="amount"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <!-- 안내사항 추가하기 -->
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+        <div class="wrap" style="margin-top: 50px;">
+            <h2>주문 주의사항</h2>
+            <ul>
+                <li>주문 후 일정 시간 내에만 변경 또는 취소가 가능합니다.</li>
+                <li>수령 후 제품의 상태를 즉시 확인해 주세요. 이상이 있을 경우, 빠른 시일 내에 고객센터에 연락해 주세요.</li>
+                <li>반품/교환 정책: 반품 및 교환은 제품 수령 후 7일 이내에 신청해 주세요. 사용한 제품은 반품이 불가능합니다.</li>
+                <li>결제 과정에서 문제가 발생할 경우, 고객센터에 문의해 주세요.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+{%endblock%}
+{% block script %}
+    <script>
+       var list = JSON.parse('{{ orderedCart|escapejs }}');
+       var cartList = JSON.parse("{{cart|escapejs}}")
+    </script>
+    <script src="{% static 'js/orderDetails.js' %}"></script>
+{% endblock %}

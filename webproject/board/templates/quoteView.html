@@ -1,0 +1,49 @@
+{% extends 'head.html' %}
+{% load static %}
+{%block css%}{%endblock%}
+
+{% block content %}
+    <div class="container d-flex justify-content-center" style="margin-top: 100px;">
+        {% include 'boardSidebar.html' %}
+        <div class="d-flex justify-content-center flex-column">
+            <table class="base-table">
+                <thead>
+                    <tr>
+                        <th>제목</th>
+                        <td colspan="3">{{post.title}}</td>
+                    </tr>
+                    <tr>
+                        <th>작성일</th>
+                        <td>{{ post.createdTime | date:'Y-m-d' }}</td>
+                        <th>작성자</th>
+                        <td>{{ post.username }}</td>
+                        <!-- <td>
+                            <form method="POST" action="{% url 'board:postView' post.id%}?next=/board/{{post.category}}" id="delete-form">
+                                {% csrf_token %}
+                                <button type="submit">삭제</button>
+                            </form>                      
+                        </td> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="min-height: 400px;" colspan="4" class="left-top-text">
+                            <p>{{ post.content }}</p>
+                            {% for attachment in attachments %}
+                                <img src="{{ attachment.image.url }}" alt="Attachment Image">
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a class="btn btn-outline-dark" href="/board/quoteInquiry/">목록으로</a> 
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    
+{% endblock %}

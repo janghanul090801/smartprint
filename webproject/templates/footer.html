@@ -1,0 +1,47 @@
+{% load static %}
+<div class="container" id="footer">
+    <footer class="row row-cols-5 py-5 my-5 border-top" style="min-width: 1320px;">
+        <div class="col-12 footer-top d-flex justify-content-between">
+            <ul class="footer-menu">
+                <li><a href="#">회사소개</a></li>
+                <li><a href="{% url 'smartprint:terms' %}">이용약관</a></li>
+                <li><a href="{% url 'smartprint:privacy' %}">개인정보취급방침</a></li>
+                <li><a href="{% url 'smartprint:direction' %}">오시는 길</a></li>
+            </ul>
+            <ul class="footer-sub">
+                <li><a href="/">home</a></li>
+                <li><a href="#">top</a></li>
+            </ul>
+        </div><br>
+        <div class="col-12 row">
+            <div class="col-5">
+                <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-decoration-none mont-font" style="color: red; font-weight: bold; font-size: 2em;">
+                    SMART PRINT
+                </a>
+                <p class="text-muted">&copy; 2022</p>
+            </div>
+
+            <div class="col-5">
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">주소 : 서울시 강서구 화곡동 167-47</li>
+                    <li class="nav-item mb-2">업무시간 : 09:00~19:00 (토/일요일, 공휴일 휴무)</li>
+                    <li class="nav-item mb-2">대표 : 장한울</li>
+                    <li class="nav-item mb-2">전화 : 010-3035-4927</li>
+                    <li class="nav-item mb-2">이메일 : smartprint@gmail.com</li>
+                </ul>
+            </div>
+
+            <div class="col-2 shortcut-list">
+                <a href="{% url 'board:quoteInquiry' %}" class="shortcut">견적문의 바로가기</a><br>
+                <a href="{% url 'board:notice' %}" class="shortcut">공지사항 바로가기</a><br>
+                <a href="{% url 'board:faq' %}" class="shortcut">FAQ 바로가기</a>
+                <br><br>
+                <a href="https://www.instagram.com/smartprint_enterprise"><i class="fa-brands fa-instagram fa-2x"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61567766335196&mibextid=JRoKGi"><i class="fa-brands fa-facebook fa-2x"></i></a>
+            </div>
+        </div>
+
+    </footer>
+</div>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/base.js' %}"></script>

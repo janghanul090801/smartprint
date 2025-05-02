@@ -1,0 +1,168 @@
+{% load static %}
+
+<div class="col-md-7 col-lg-8 form-container">
+    <h4 class="mb-3">{{goodsInfo.get_category_display}}>{{goodsInfo.name}}</h4>
+    <hr>
+    <form class="needs-validation" method="post" action="{% url 'order:submissionForm' 'book' goodsInfo.id %}" id="submissionForm" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="hidden" value="{{goodsInfo.category}}" name="category">
+      <input type="hidden" value="{{goodsInfo.name}}" name="name">
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label">용지</label>
+          <label class="form-label">표지</label>
+          {{form.paperType}}
+          {% if form.paperType.error %}
+            <div class="text-danger">
+                {{ form.paperType.error }}
+            </div>
+          {% endif %}
+        </div>
+        <hr>
+
+        <div class="col-12">
+          <label class="form-label">도수</label>
+          {{form.process}}
+          {% if form.process.error %}
+            <div class="text-danger">
+                {{ form.process.error }}
+            </div>
+          {% endif %}
+        </div>
+        <hr>
+
+        <div class="col-12">
+          <span class="form-label" style="width: auto;">규격</span>
+          <div class="row form-input">
+            <div class="col-12">
+              <select class="form-select" id="standard">
+                  <option value="7">대봉투</option>
+                  <option value="8">중봉투</option>
+                  <option value="9">소봉투</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label class="form-label">가로</label>
+              <div class="input-group has-validation">
+                {{form.width}}
+                <span class="mm" style="margin-left: 3px;">mm</span>
+              </div>
+              {% if form.width.error %}
+                <div class="text-danger">
+                    {{ form.width.error }}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="col-6">
+              <label class="form-label">세로</label>
+              <div class="input-group has-validation">
+                {{form.height}}
+                <span class="mm" style="margin-left: 3px;">mm</span>
+              </div>
+              {% if form.height.error %}
+                <div class="text-danger">
+                    {{ form.height.error }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <div class="col-12">
+            <label class="form-label">수량</label>
+            <div class="form-input">
+              <div class="between form-small-input">
+                <select name="quantity" required class="form-select form-input" id="id_quantity">
+                  <option value="100">100</option>
+                  <option value="200">200</option>
+                  <option value="500">500</option>
+                  <option value="1000">1000</option>
+                  <option value="2000">2000</option>
+                  <option value="3000">3000</option>
+                  <option value="4000">4000</option>
+                  <option value="5000">5000</option>
+                  <option value="6000">6000</option>
+                  <option value="7000">7000</option>
+                  <option value="8000">8000</option>
+                  <option value="9000">9000</option>
+                  <option value="10000">10000</option>
+                  <option value="20000">20000</option>
+                  <option value="30000">30000</option>
+                  <option value="40000">40000</option>
+                  <option value="50000">50000</option>
+                  <option value="60000">60000</option>
+                  <option value="70000">70000</option>
+                  <option value="80000">80000</option>
+                  <option value="90000">90000</option>
+                  <option value="100000">100000</option>
+                  <option value="110000">110000</option>
+                  <option value="120000">120000</option>
+                  <option value="130000">130000</option>
+                  <option value="140000">140000</option>
+                  <option value="150000">150000</option>
+                </select>
+                <span class="mm">매</span>
+              </div>
+            </div>
+            {% if form.quantity.error %}
+              <div class="text-danger">
+                  {{ form.quantity.error }}
+              </div>
+            {% endif %}
+        </div>
+        <hr>
+
+        <div class="col-12 between">
+            <label for="country" class="form-label">주문 건수</label>
+            <div class="form-input">
+              <div class="between form-small-input">
+                {{form.noc}}
+                <span class="mm">건</span>
+              </div>
+            </div>
+            {% if form.noc.error %}
+              <div class="text-danger">
+                  {{ form.noc.error }}
+               </div>
+            {% endif %}
+        </div>
+        <hr>
+
+        <div class="col-12 between">
+          <span>가격 : </span>
+          <h2 id="price" class="text-danger fw-bold">{{goodsInfo.price}}</h2>
+          <input type="hidden" value="{{goodsInfo.price}}" id="priceInput" name="price">
+        </div>
+        
+
+          <button class="w-100 btn main-color btn-lg" type="button">장바구니에 담기</button>
+          <div class="popup_layer" id="popup_layer" style="display: none; margin-top: 0px;">
+            <div class="popup_box">
+              <div style="height: 30px; width: 30px; float: top;">
+                <a href="javascript:closePop();"><img src="{% static 'img/ic_close.svg' %}"></a>
+              </div>          
+                <div class="popup_cont">
+                  <h5>파일업로드</h5>
+                    <input class="file-name" value="" placeholder="첨부파일" disabled required>
+                    <label for="file" class="w-100 text-center">파일찾기</label>
+                    {{form.imgFile}}
+                    <!-- https://velog.io/@sklove96/inputtypefile-%EC%BB%A4%EC%8A%A4%ED%85%80%ED%95%98%EA%B8%B0 -->
+                </div>
+                <div>
+                  <p>추가요청사항</p>
+                  {{form.additionalRequest}}
+                </div>
+                <div class="popup_btn" style="float: bottom;">
+                  {% if user.is_authenticated %}
+                    <a href="javascript:insertCart();" id="add-button">장바구니에 담기</a>
+                  {% else %}
+                    <a href="javascript:notLogin();" id="add-button">장바구니에 담기</a>
+                  {% endif %}
+                </div>
+            </div>
+          </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,211 @@
+{% extends 'head.html' %}
+{% load static %}
+{%block css%}<link rel="stylesheet" type="text/css" href="{%static 'css/home.css' %}">{%endblock%}
+
+{% block content %}
+    <section>
+        <br>
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner" style="height: 580px; min-width: 1600px;">
+                <div class="carousel-item active banner" style="background-image: url('/static/img/mainBanner1.jpg');"></div>
+                <div class="carousel-item banner" style="background-image: url('/static/img/mainBanner1.jpg');"></div>
+                <div class="carousel-item banner" style="background-image: url('/static/img/mainBanner1.jpg');"></div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <br><br>
+
+        <div class="notice-faq d-flex justify-content-between">
+            <div class="board">
+                <span class="board-title">공지사항</span><a href="{% url 'board:notice' %}"><span class="see-more">더보기 ></span></a>
+                <ul class="notice">
+                    {% for i in notice %}
+                    <li><a href="{% url 'board:postView' i.id %}" class="d-flex justify-content-between board-a">
+                        <p class="post-title">{{i.title}}</p><span>{{i.createdTime|date:'Y-m-d'}}</span>
+                    </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="board">
+                <span class="board-title">견적문의</span><a href="{% url 'board:quoteInquiry' %}"><span class="see-more">더보기 ></span></a>
+                <ul class="faq">
+                    {% for i in quote %}
+                    <li id="{{i.id}}" onclick="return showWindow(this);"><a href="{% url 'board:quoteView' i.id %}" class="d-flex justify-content-between board-a">{{i.title}}<span>{{i.createdTime|date:'Y-m-d'}}</span></a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <br>
+
+        <div class="contents" style="min-width: 1652px;">
+            <ul class="tab-menu" style="padding-left: 0px;">
+                <li class="active"><a class="hover" href="">명함</a>
+                    <div id="showGoods" class="d-flex justify-content-center">
+                        <div class="goods-container">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex justify-content-between">
+                                {% for i in namecard %}
+                                    <div class="col-3">
+                                        <a href="{% url 'order:submissionForm' 'namecard' i.id %}">
+                                            <div class="card shadow-sm">
+                                                <img class="bd-placeholder-img card-img-top" width="100%" height="250"
+                                                    src="{{ i.img.url }}"></img>
+                                                <div class="card-body">
+                                                    <span class="card-text" >{{i.name}}</span>
+                                                    <span class="card-text price" style="float: right; color: red; font-weight:700;">{{i.price}}원</span>
+                                                </div>
+                                            </div>                                       
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a class="hover" href="">홍보물</a>
+                    <div id="showGoods" class="d-flex justify-content-center">
+                        <div class="goods-container">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                                {% for i in promotion %}
+                                    <div class="col-3">
+                                        <a href="{% url 'order:submissionForm' 'promotion' i.id %}">
+                                            <div class="card shadow-sm">
+                                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                                    src="{{ i.img.url }}"></img>
+                                                <div class="card-body">
+                                                    <span class="card-text" >{{i.name}}</span>
+                                                    <span class="card-text price" style="float: right; color: red; font-weight:700;">{{i.price}}원</span>
+                                                </div>
+                                            </div>                                       
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a class="hover" href="">스티커</a>
+                    <div id="showGoods" class="d-flex justify-content-center">
+                        <div class="goods-container">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                                {% for i in sticker %}
+                                    <div class="col-3">
+                                        <a href="{% url 'order:submissionForm' 'sticker' i.id %}">
+                                            <div class="card shadow-sm">
+                                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                                    src="{{ i.img.url }}"></img>
+                                                <div class="card-body">
+                                                    <span class="card-text" >{{i.name}}</span>
+                                                    <span class="card-text price" style="float: right; color: red; font-weight:700;">{{i.price}}원</span>
+                                                </div>
+                                            </div>                                       
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a class="hover" href="">책자</a>
+                    <div id="showGoods" class="d-flex justify-content-center">
+                        <div class="goods-container">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                                {% for i in book %}
+                                    <div class="col-3">
+                                        <a href="{% url 'order:submissionForm' 'book' i.id %}">
+                                            <div class="card shadow-sm">
+                                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                                    src="{{ i.img.url }}"></img>
+                                                <div class="card-body">
+                                                    <span class="card-text" >{{i.name}}</span>
+                                                    <span class="card-text price" style="float: right; color: red; font-weight:700;">{{i.price}}원</span>
+                                                </div>
+                                            </div>                                       
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a class="hover" href="">봉투</a>
+                    <div id="showGoods" class="d-flex justify-content-center">
+                        <div class="goods-container">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                                {% for i in envelope %}
+                                    <div class="col-3">
+                                        <a href="{% url 'order:submissionForm' 'envelope' i.id %}">
+                                            <div class="card shadow-sm">
+                                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                                    src="{{ i.img.url }}"></img>
+                                                <div class="card-body">
+                                                    <span class="card-text" >{{i.name}}</span>
+                                                    <span class="card-text price" style="float: right; color: red; font-weight:700;">{{i.price}}원</span>
+                                                </div>
+                                            </div>                                       
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a class="hover" href="">기타 인쇄물</a>
+                    <div id="showGoods" class="d-flex justify-content-center">
+                        <div class="goods-container">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                                {% for i in other %}
+                                    <div class="col-3">
+                                        <a href="{% url 'order:submissionForm' 'other' i.id %}">
+                                            <div class="card shadow-sm">
+                                                <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                                    src="{{ i.img.url }}"></img>
+                                                <div class="card-body">
+                                                    <span class="card-text" >{{i.name}}</span>
+                                                    <span class="card-text price" style="float: right; color: red; font-weight:700;">{{i.price}}원</span>
+                                                </div>
+                                            </div>                                       
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="number-input justify-content-center align-items-center">
+            <div class="input-contents">
+                <i class="fa-solid fa-x" onclick="$('#lastNumber').val(''); closeWindow($('.number-input'))" style="cursor: pointer;"></i>
+                <div class="input-div">
+                    <h4>전화번호 끝자리 입력</h2>
+                    <input type="number" id="lastNumber" oninput="this.value = this.value.slice(0,4)" style="text-align:right;">
+                    <input type="hidden" id="id">
+                    <button type="button" id="submit" class="btn main-color btn-submit">확인</button>
+                </div>
+            </div>
+        </div>
+    </section>
+{%endblock%}
+{% block script %}
+    <script>
+        // var list = JSON.parse('{{ goodsList|escapejs }}')
+    </script>
+    <script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

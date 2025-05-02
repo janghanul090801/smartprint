@@ -1,0 +1,156 @@
+{% extends "head.html" %}
+{% load static %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{% static 'css/signupForm.css' %}">{% endblock %}
+{% block content %}
+    <section class="d-flex justify-content-center align-items-center flex-column">
+        <h2 class="title">회원정보수정</h2>
+        <form method="post" id="EditForm" class="d-flex align-items-center flex-column" action="{% url 'user:editInfo' %}">
+            {% csrf_token %}
+            <input type="hidden" value="1" name="is_change_password" id="is-change-password">
+            <table class="base-table">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <th>{{form.name.label}}</th>
+                        <td>
+                            {{form.name}}
+                            {% if form.name.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.name.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.email.label}}</th>
+                        <td>
+                            {{form.email}}
+                            {% if form.email.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.email.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>비밀번호</th>
+                        <td><button type="button" id="change-password-btn">비밀번호 변경</button></td>
+                    </tr>
+                    <tr class="hidden">
+                        <th>{{pwForm.old_password.label}}</th>
+                        <td>
+                            {{pwForm.old_password}}
+                            {% if pwForm.old_password.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ pwForm.old_password.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr class="hidden">
+                        <th>{{pwForm.new_password1.label}}</th>
+                        <td>
+                            {{pwForm.new_password1}}
+                            {% if pwForm.new_password1.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ pwForm.new_password1.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr class="hidden">
+                        <th>{{pwForm.new_password2.label}}</th>
+                        <td>
+                            {{pwForm.new_password2}}
+                            {% if pwForm.new_password2.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ pwForm.new_password2.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.firstNumber.label}}</th>
+                        <td>
+                            <div class="row">       
+                                <div class="col-3">
+                                    {{form.firstNumber}}
+                                </div>
+                                <span class="hyphen">-</span>
+                                <div class="col-4">
+                                    {{form.middleNumber}}
+                                    {% if form.middleNumber.errors %}
+                                        <div class="text-danger error-msg">
+                                            {{ form.middleNumber.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <span class="hyphen">-</span>
+                                <div class="col-4">
+                                    {{form.lastNumber}}
+                                    {% if form.lastNumber.errors %}
+                                        <div class="text-danger error-msg">
+                                            {{ form.lastNumber.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.address.label}}</th>
+                        <td>
+                            <div class="w-75">
+                                <div class="d-flex mb-2">
+                                {{form.postcode}}
+                                <input type="button" class="btn btn-outline-dark" onclick="execDaumPostcode()" value="우편번호 찾기">
+                                </div>
+                                {{form.address}}
+                                <div class="d-flex mt-2">
+                                {{form.detailAddress}}
+                                {{form.extraAddress}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% if user.userType == '기업회원' %}
+                    <tr>
+                        <th>{{form.exponent.label}}</th>
+                        <td>
+                            {{form.exponent}}
+                            {% if form.exponent.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.exponent.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.businessNumber.label}}</th>
+                        <td>
+                            {{form.businessNumber}}
+                            {% if form.businessNumber.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.businessNumber.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <button type="button" class="btn btn-outline-dark btn-lg w-25" onclick="history.back();">취소</button>
+                            <button type="submit" class="btn main-color btn-lg w-25">수정</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </section>
+{%endblock%}
+{% block script %}
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="{% static 'js/signupForm.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "head.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center flex-column">
+        <h1 class="title">마이페이지</h1>
+        <table class="base-table td-2 mb-5">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <th>회원유형</th>
+                    <td colspan="3">
+                        {{user.userType}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td colspan="3">
+                        {{user.name}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td colspan="3">
+                        {{user.email}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>전화번호</th>
+                    <td colspan="3">
+                        <div class="d-flex">     
+                            <span>{{user.firstNumber}} - {{user.middleNumber}} - {{user.lastNumber}}</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>우편번호</th>
+                    <td>
+                        {{user.postcode}}
+                    </td>
+                    <th>주소</th>
+                    <td>
+                        {{user.address}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>상세 주소</th>
+                    <td colspan="3">
+                        {{user.detailAddress}}
+                        {{user.extraAddress}}
+                    </td>
+                </tr>
+                {% if user.userType == '기업회원' %}
+                <tr>
+                    <th>대표자명</th>
+                    <td colspan="3">
+                        {{user.exponent}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>사업자등록번호</th>
+                    <td colspan="3">
+                        {{user.businessNumber}}
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <a href="{% url 'user:editInfo' %}" class="btn main-color">정보 수정</a>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        
+    </div>
+{%endblock%}

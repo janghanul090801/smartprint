@@ -1,0 +1,82 @@
+{% extends 'head.html' %}
+{% load static %}
+{%block css%}{%endblock%}
+
+{% block content %}
+    <div class="container mt-5 d-flex justify-content-center" style="min-width: 960px;">
+        {% include 'boardSidebar.html' %}
+        <div style="width: 80%;">
+            <h1 class="mb-4">공지사항</h1>
+
+            <div class="d-flex justify-content-between">
+                <form class="d-flex" method="GET" action="{% url 'board:notice' %}">
+                    <select class="form-select rounded-0 no-focus-outline" name="type" style="width: 150px;">
+                        <option value="title">제목</option>
+                    </select>
+                    <input type="text" class="form-control rounded-0 no-focus-outline" name="q">
+                    <button type="submit" class="input-group-text rounded-0" id="basic-addon1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                    </button>
+                </form>
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'board:postWrite' 'notice' %}" class="btn main-color mb-3">공지사항 작성</a>
+                {% endif %}
+            </div>
+
+            <div>
+               <div class="list-group-item" style="background-color: #ddd;">
+                    <div class="row">
+                        <small class="col-1">번호</small>
+                        <h5 class="col-6" style="margin:0;">제목</h5>
+                        <small class="col-3 text-end">등록일</small>
+                        <small class="col-2 text-end">조회수</small>
+                    </div>
+                </div>
+            </div>
+            
+            {% for i in posts %}
+            <a class="list-group rounded-0" href="{% url 'board:postView' i.id %}">
+                <div class="list-group-item list-group-item-action">
+                    <div class="row">
+                        <small class="col-1">{{i.id}}</small>
+                        <h5 class="col-6" style="margin:0;">{{i.title}}</h5>
+                        <small class="col-3 text-end">{{i.createdTime|date:'Y-m-d'}}</small>
+                        <small class="col-2 text-end">{{i.views}}</small>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if posts.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ posts.previous_page_number }}"><i class="fa-solid fa-angle-left"></i></a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in posts.paginator.page_range %}
+        {% if page_number >= posts.number|add:-5 and page_number <= posts.number|add:5 %}
+        {% if page_number == posts.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if posts.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ posts.next_page_number }}"><i class="fa-solid fa-angle-right"></i></a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+{% endblock %}

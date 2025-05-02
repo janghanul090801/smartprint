@@ -1,0 +1,55 @@
+.footer-top{
+    height: 60px;
+    display: flex;
+    justify-content: space-between; 
+} 
+
+.footer-menu{
+    width: 550px;
+    height: 40px;
+    list-style-type: none;
+}
+
+.footer-sub{
+    width: 170px;
+    height: 40px;
+    list-style-type: none;
+}
+
+.footer-menu a, .footer-sub a{
+    color: black; 
+    font-size: 0.8em;
+    width: auto;
+    padding: 0px 10px;
+    float: left;
+    border-right: 1px solid gray;
+    text-align: center;
+    text-decoration: none;
+}
+
+.footer-menu a:hover, .footer-sub a:hover{
+    font-weight: bold;
+    color: #333;
+}
+
+.footer-sub li:nth-child(2) a{
+    border-right: none;
+}
+
+.footer-menu li:nth-child(5) a{
+    border-right: none;
+}
+
+.shortcut-list {
+    text-align: right;
+}
+
+.shortcut {
+    color: #333;
+    font-size: 1.2em;
+}
+
+.shortcut:hover {
+    color: #333;
+    font-weight: bold;
+}

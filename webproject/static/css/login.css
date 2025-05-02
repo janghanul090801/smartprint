@@ -1,0 +1,40 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 200px;
+}
+
+.login-form{
+    max-width: 400px;
+    margin: 0px auto;
+}
+
+.login-form input {
+    margin-top: 20px;
+}
+
+.finding-container{
+    margin: 20px 0 0;
+}
+
+.find {
+    color: #333;
+}
+
+.find:hover{
+    color: #333;
+    font-weight: bold;
+}
+
+.btn:hover{
+    color: #fff;
+    font-weight: bold;
+}

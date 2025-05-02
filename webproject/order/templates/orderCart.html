@@ -1,0 +1,74 @@
+{% extends 'head.html' %}
+{% load static %}
+{%block css%}<link rel="stylesheet" type="text/css" href="{%static 'css/orderCart.css' %}?after">{%endblock%}
+
+{% block content %}
+    <section class="container d-flex justify-content-center align-items-center flex-column">
+        <h2 class="title">장바구니</h2>
+        <div class="wrap">
+            <form method="get" action="{% url 'order:orderInfo' %}" id="orderCartForm">
+                {% csrf_token %}
+                <input type="hidden" name="goods" id="goodsList">
+                <table class="wrapTable">
+                    <thead>
+                        <tr>
+                            <td style="text-align: right;"><span>장바구니 > 주문 정보 입력 > 주문 완료</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <table class="orderTable">
+                                    <thead>
+                                        <tr class="table-tr-height">
+                                            <th><input type="checkbox" name="goodsCheck" onclick="selectAll(this, 'goodsId')"></th>
+                                            <th>번호</th>
+                                            <th>주문품목</th>
+                                            <th>첨부파일</th>
+                                            <th>수량</th>
+                                            <th>금액</th>
+                                            <th>삭제</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="showGoods"></tbody>
+                                    <tfoot>
+                                        <tr class="table-tr-height">
+                                            <th colspan="7" style="text-align: right;" id="amount"></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2">
+                                <a href="javascript:;" class="btn cartButton main-color" onclick="moveInfo()">전체상품 주문</a>
+                                <a href="javascript:;" class="btn cartButton" onclick="moveCheckedInfo()" style="background-color: #FF8A80; color: #fff;">선택상품 주문</a>
+                                <a href="/" class="btn cartButton btn-outline-dark">홈으로 가기</a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </form>
+            <div class="wrap" style="margin-top: 50px;">
+                <h2>상품 주문 시 유의사항</h2>
+                <ul>
+                    <li>주문할 상품의 수량과 종류를 확인해주세요.</li>
+
+                    <li>파일 형식(예: PDF, AI 등)과 해상도가 적절한지 확인해주세요.</li>
+
+                    <li>배송 주소와 연락처 정보를 정확히 입력해주세요. 잘못된 정보를 입력 시 배송 지연이 발생할 수 있습니다.</li>
+
+                    <li>주문자의 책임으로 문제가 발생 시 환불이 불가능합니다.</li>
+                <ul>
+            </div>
+        </div>
+    </section> 
+{%endblock%}
+{%block script%}
+<script type="text/javascript">
+    var list = JSON.parse('{{ goodsList|escapejs }}');
+</script>
+<script src="{% static 'js/orderCart.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'head.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{%block css%}<link rel="stylesheet" type="text/css" href="{%static 'css/boardInput.css' %}">{%endblock%}
+
+{% block content %}
+<div class="container d-flex justify-content-center" style="margin-top: 100px;">
+    {% include 'boardSidebar.html' %}
+    <div class="d-flex flex-column">
+        <h2>글 작성</h2>
+        <form method="post" action="{% url 'board:quoteWrite' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="base-table">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <th>{{form.username.label}}</th>
+                        <td>
+                            {{form.username}}
+                            {% if form.username.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.username.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.userLastNumber.label}}</th>
+                        <td>
+                            {{form.userLastNumber}}
+                            {% if form.userLastNumber.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.userLastNumber.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.userEmail.label}}</th>
+                        <td>
+                            {{form.userEmail}}
+                            {% if form.userEmail.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.userEmail.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.title.label}}</th>
+                        <td>
+                            {{form.title}}
+                            {% if form.title.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.title.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{form.content.label}}</th>
+                        <td class="content">
+                            {{form.content}}
+                            {% if form.content.errors %}
+                                <div class="text-danger error-msg">
+                                    {{ form.content.errors }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{imageForm.image.label}}</th>
+                        <td>
+                            {{imageForm.image}}
+                            {% if imageForm.image.errors %}
+                            <div class="text-danger">
+                                {{ imaegForm.image.errors }}
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <button type="button" class="btn btn-outline-dark btn-lg w-25">취소</button>
+                            <button type="submit" class="btn main-color btn-lg w-25">등록</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock %}

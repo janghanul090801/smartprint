@@ -1,0 +1,13 @@
+{% extends 'head.html' %}
+{% load static %}
+{%block css%}{%endblock%}
+
+{% block content %}
+<div class="container d-flex justify-content-between align-items-center">
+    {% include "boardSidebar.html" %}
+    <div style="width:80%;" class="d-flex flex-column justify-content-center align-items-center">
+        <h2 class="title">오시는 길</h2>
+        <img src="https://www.google.com/maps/vt/data=axzfADUV9SVyYmgEQhqJ9J7Vkwccmp3VTtG02VDN-lGWVKWj-q3OBXhjmVF_mPp2oqgh-dL9PCX8ysngLSIvTL6WdPM_8ZRISp_a4MZmo-taf6isf6InDPo7EwrbYLWlBb6Ey_mvwyZY9bMPqDkn5P-n5bfPJqLhL_sSqNN-4ceQbVjWIyyk7nmG0HFo98Wcg94Nm6hqWvXhQ9gs" style="width:100%; height:auto;">
+    </div>
+</div>
+{% endblock %}

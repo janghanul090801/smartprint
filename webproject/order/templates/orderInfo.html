@@ -1,0 +1,104 @@
+{% extends 'head.html' %}
+{% load static %}
+{%block css%}{%endblock%}
+
+{% block content %}
+{% comment %} https://getbootstrap.com/docs/5.3/examples/checkout/ {% endcomment %}
+<div class="container">
+    <main style="margin-top: 100px;">
+      <div class="row g-5">
+        <div class="col-md-5 col-lg-4 order-md-last">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-dark">장바구니</span>
+            <span class="badge bg-primary rounded-pill" id="quantity"></span>
+          </h4>
+          <ul class="list-group mb-3" id="showGoods"></ul>
+        </div>
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">주소지</h4>
+          <form class="needs-validation" method="post" action="{% url 'order:orderInfo' %}">
+            {% csrf_token %}
+            <input type="hidden" value="" name="cartId" id="cartId">
+            <div class="row g-3">
+              <div class="col-12">
+                <label for="lastName" class="form-label">수령인</label>
+                {{form.name}}
+              </div>
+  
+              <div class="col-12">
+                <label for="email" class="form-label">이메일</label>
+                {{form.email}}
+              </div>
+  
+              <div class="col-12">
+                  <label for="address" class="form-label">주소</label>
+                  <div>
+                    <div class="d-flex">
+                      {{form.postcode}}
+                      <input type="button" class="btn btn-outline-dark" onclick="execDaumPostcode()" value="우편번호 찾기">
+                    </div>
+                    {{form.address}}<br>
+                    <div class="d-flex">
+                      {{form.detailAddress}}
+                      {{form.extraAddress}}
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-12">
+                <label for="email" class="form-label">배송방법</label>
+                {{form.shippingWay}}
+              </div>
+            
+            <hr class="my-4">
+  
+            <div id="payment">
+              <h4 class="mb-3">결제수단</h4>
+    
+              <div class="my-3">
+                {% for radio in form.paymentMethod %}
+                  <div class="form-check">
+                      {{ radio.tag }}  
+                      {{ radio.choice_label }}  
+                  </div>
+                {% endfor %}
+              </div>
+    
+              <div class="row gy-3">
+                <div class="col-md-6">
+                  <label for="cc-name" class="form-label">카드</label>
+                  {{form.creditCardName}}
+                  {{form.debitCardName}}
+                </div>
+    
+                <div class="col-md-6">
+                  <label for="cc-number" class="form-label">카드 번호</label>
+                  {{form.cardNumber}}
+                </div>
+    
+                <div class="col-md-3">
+                  <label for="cc-expiration" class="form-label">유효기간</label>
+                  {{form.expirationDate}}
+                </div>
+    
+                <div class="col-md-3">
+                  <label for="cc-cvv" class="form-label">CVV 번호</label>
+                  {{form.cvv}}
+                </div>
+              </div>
+              <hr class="my-4">
+            </div>
+  
+            <button class="w-100 btn main-color btn-lg" type="submit">주문하기</button>
+          </form>
+        </div>
+      </div>
+    </main>
+{%endblock%}
+{%block script%}
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+  var list = JSON.parse('{{ goodsList|escapejs }}');
+</script>
+<script src="{% static 'js/orderInfo.js' %}"></script>
+{% endblock %}
